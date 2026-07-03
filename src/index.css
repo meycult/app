@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #030d07;
+  --color-surface: #071a0f;
+  --color-panel: rgba(8, 26, 16, 0.55);
+  --color-accent: #22e06a;
+  --color-accent-2: #6effa0;
+  --color-text: #d6ffe2;
+  --color-text-muted: rgba(214, 255, 226, 0.55);
+  --color-line: rgba(34, 224, 106, 0.18);
+  --color-yes: #22e06a;
+  --color-no: #e04a4a;
+  --color-yes-bg: rgba(34, 224, 106, 0.12);
+  --color-no-bg: rgba(224, 74, 74, 0.12);
+  --color-success: #22e06a;
+  --color-danger: #e04a4a;
+  --color-warning: #b8ff33;
+  --color-info: #22e06a;
+  --color-premium-400: #f0c040;
+  --color-premium-500: #d4a020;
+  --color-premium-600: #b08010;
+  --font-heading: "Rajdhani", sans-serif;
+  --font-body: "Space Grotesk", sans-serif;
+  --font-mono: "Space Mono", monospace;
+  --font-logo: "Chakra Petch", sans-serif;
+  --radius: 4px;
+  --glow: 0 0 20px rgba(34, 224, 106, 0.25);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@utility scrollbar-thin {
+  &::-webkit-scrollbar { width: 6px; height: 6px; }
+  &::-webkit-scrollbar-track { background: var(--color-surface); }
+  &::-webkit-scrollbar-thumb { background: var(--color-accent); border-radius: 3px; }
+}
+
+@utility glass {
+  background: color-mix(in srgb, var(--color-surface) 85%, transparent);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-line);
+}
+
+@utility glow-accent {
+  box-shadow: 0 0 20px color-mix(in srgb, var(--color-accent) 30%, transparent),
+              0 0 60px color-mix(in srgb, var(--color-accent) 10%, transparent);
+}
+
+@utility glow-premium {
+  box-shadow: 0 0 20px color-mix(in srgb, var(--color-premium-400) 30%, transparent),
+              0 0 60px color-mix(in srgb, var(--color-premium-500) 10%, transparent);
+}
+
+.holo-grid {
+  position: relative;
+}
+
+.ui-label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 10px;
+}
+
+.ui-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+h2 {
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 12px var(--color-accent),
+               0 0 30px color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
