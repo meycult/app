@@ -1,11 +1,13 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import type { User } from '@supabase/supabase-js'
 import type { Player, Player as PlayerT } from '@/types'
 
 interface GameState {
   player: Player
   setPlayer: (player: Player) => void
   updatePlayer: (partial: Partial<Player>) => void
+  hydrateFromUser: (user: User) => void
 }
 
 const defaultPlayer: Player = {
@@ -45,6 +47,17 @@ export const useGameStore = create<GameState>()(
 
       updatePlayer: (partial: Partial<PlayerT>) =>
         set((state) => ({ player: { ...state.player, ...partial } })),
+
+      hydrateFromUser: (user: User) =>
+        set((state) => ({
+          player: {
+            ...state.player,
+            id: user.id,
+            username: (user.user_metadata.full_name as string) || user.email?.split('@')[0] || 'Oracle',
+            avatarUrl: (user.user_metadata.avatar_url as string) || '',
+            joinedAt: user.created_at || state.player.joinedAt,
+          },
+        })),
     }),
     {
       name: 'meyfate-game-state',
