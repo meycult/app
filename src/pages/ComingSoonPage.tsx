@@ -89,7 +89,7 @@ export function ComingSoonPage() {
                 <span style={{ color: 'var(--color-text)' }}>Mey</span>
                 <span style={{ color: 'var(--color-accent)' }}>Cult</span>
               </span>{' '}
-              <span className="uppercase tracking-wider">Store</span>
+              <span className="uppercase tracking-wider" style={{ color: 'var(--color-text)' }}>Store</span>
             </a>
             <button
               type="button"
