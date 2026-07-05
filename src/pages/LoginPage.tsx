@@ -58,7 +58,7 @@ export function LoginPage() {
               <div className="w-full border-t border-line/30" />
             </div>
             <div className="relative flex justify-center">
-              <span className="px-2 text-xs text-text-muted bg-bg rounded">or</span>
+              <span className="px-2 text-xs text-accent/50">or</span>
             </div>
           </div>
 
