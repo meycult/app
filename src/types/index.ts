@@ -1,5 +1,6 @@
 export type Alignment = 'LG' | 'NG' | 'CG' | 'LN' | 'TN' | 'CN' | 'LE' | 'NE' | 'CE'
 
+export type Cult = string
 export type Faction = 'architects' | 'wardens' | 'legion' | 'operatives' | 'tribunal' | 'monastics'
 
 export type VirtueName = 'wisdom' | 'courage' | 'prudence' | 'skill' | 'temperance' | 'justice'
@@ -315,12 +316,13 @@ export interface SkillTreeNode {
 
 export interface Player {
   id: string
-  username: string
+  handle: string
+  alias?: string
   avatarUrl: string
   level: number
   xp: number
   insightPoints: number
-  faction: Faction
+  cult: Cult
   virtues: Virtues
   virtueXP: VirtueXP
   badges: Badge[]
@@ -348,6 +350,7 @@ export interface Player {
   badgeEffect?: string
   starterPackPurchased?: boolean
   status?: 'active' | 'banned'
+  onboardingComplete?: boolean
 }
 
 export type StoreCategory = 'currency' | 'cosmetic'
