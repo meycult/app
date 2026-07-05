@@ -11,6 +11,7 @@ export function LandingPage() {
       <div className="relative z-10 w-full max-w-md px-4">
         <div className="glass rounded-xl p-8 glow-accent">
           <div className="flex flex-col items-center mb-8">
+            <a href="https://meycult.com" target="_blank" rel="noopener noreferrer">
             <svg
               width={126}
               viewBox="0 0 200.56923 175.72475"
@@ -33,6 +34,7 @@ export function LandingPage() {
                 />
               </g>
             </svg>
+            </a>
 
             <div
               className="text-2xl font-bold tracking-wider leading-tight mt-4 text-center"

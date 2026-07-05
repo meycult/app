@@ -20,6 +20,7 @@ export function ComingSoonPage() {
       <div className="relative z-10 w-full max-w-md px-4">
         <div className="glass rounded-xl p-8 glow-accent">
           <div className="flex flex-col items-center mb-8">
+            <a href="https://meycult.com" target="_blank" rel="noopener noreferrer">
             <svg
               width={126}
               viewBox="0 0 200.56923 175.72475"
@@ -42,6 +43,7 @@ export function ComingSoonPage() {
                 />
               </g>
             </svg>
+            </a>
 
             <div
               className="text-2xl font-bold tracking-wider leading-tight mt-4 text-center"
@@ -76,7 +78,19 @@ export function ComingSoonPage() {
             &ldquo;The oracles are still consulting the void. Prophecies don&rsquo;t write themselves.&rdquo;
           </p>
 
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center gap-4 mb-4">
+            <a
+              href="https://meycult.com/shop"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 rounded-lg border border-accent/30 text-accent text-sm font-medium hover:bg-accent/10 transition-colors"
+            >
+              <span style={{ fontFamily: 'var(--font-logo)', fontWeight: 700 }}>
+                <span style={{ color: 'var(--color-text)' }}>Mey</span>
+                <span style={{ color: 'var(--color-accent)' }}>Cult</span>
+              </span>{' '}
+              <span className="uppercase tracking-wider">Store</span>
+            </a>
             <button
               type="button"
               onClick={handleSignOut}
