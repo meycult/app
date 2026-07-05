@@ -7,7 +7,7 @@ export function GuestRoute() {
   if (loading) return null
 
   if (user) {
-    return <Navigate to="/atlas" replace />
+    return <Navigate to="/coming-soon" replace />
   }
 
   return <Outlet />

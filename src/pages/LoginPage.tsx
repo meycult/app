@@ -22,7 +22,7 @@ export function LoginPage() {
       setError(error.message)
       setSubmitting(false)
     } else {
-      navigate('/atlas', { replace: true })
+      navigate('/coming-soon', { replace: true })
     }
   }
 
@@ -34,6 +34,10 @@ export function LoginPage() {
           <div className="flex justify-center mb-8">
             <Logo size={28} />
           </div>
+
+          <h1 className="text-xl font-heading text-center mb-6 uppercase tracking-wider text-text">
+            Sign In
+          </h1>
 
           <button
             type="button"
@@ -74,7 +78,7 @@ export function LoginPage() {
                 onChange={e => setEmail(e.target.value)}
                 required
                 className="w-full px-3 py-2.5 rounded-lg bg-surface border border-line/30 text-text text-sm placeholder:text-text-muted/40 focus:border-accent/50 focus:outline-none transition-colors"
-                placeholder="oracle@meyfate.io"
+                placeholder="oracle@meycult.io"
               />
             </div>
             <div>

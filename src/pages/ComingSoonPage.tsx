@@ -1,9 +1,18 @@
-import { Link } from 'react-router-dom'
-import { ParticleCanvas } from '@/components/decor/ParticleCanvas'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
+import { useGameStore } from '@/stores/gameStore'
+import { ParticleCanvas } from '@/components/decor/ParticleCanvas'
 
-export function LandingPage() {
-  const { user } = useAuth()
+export function ComingSoonPage() {
+  const { signOut } = useAuth()
+  const navigate = useNavigate()
+  const player = useGameStore((s) => s.player)
+  const displayName = player.alias || player.handle || 'Oracle'
+
+  const handleSignOut = async () => {
+    await signOut()
+    navigate('/login', { replace: true })
+  }
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-bg overflow-hidden">
@@ -50,48 +59,36 @@ export function LandingPage() {
             </div>
           </div>
 
+          <h1 className="text-3xl font-heading font-bold text-center mb-4 uppercase tracking-wider text-text">
+            {displayName}
+          </h1>
+
           <p className="text-center text-text text-xs leading-relaxed mb-4">
-            <span style={{ fontFamily: 'var(--font-logo)', fontWeight: 700 }}>
+            <span style={{ fontFamily: 'var(--font-logo)' }}>
               <span style={{ color: 'var(--color-text)' }}>Mey</span>
               <span style={{ color: 'var(--color-accent)', textShadow: '0 0 12px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.2)' }}>Cult</span>
             </span>
             {' '}is still being forged. The quest markets are not yet open.
-            Create an account to be notified when the network awakens.
+            We&rsquo;ll send word the moment the network awakens.
           </p>
 
           <p className="text-center text-text-muted text-sm leading-relaxed mb-8 italic">
-            &ldquo;The void calls. The prophecies await. The markets are forming.&rdquo;
+            &ldquo;The oracles are still consulting the void. Prophecies don&rsquo;t write themselves.&rdquo;
           </p>
 
-          <div className="flex items-center justify-center gap-4">
-            {user ? (
-              <Link
-                to="/coming-soon"
-                className="px-6 py-3 rounded-lg bg-accent text-bg font-bold text-sm uppercase tracking-wider hover:bg-accent/80 transition-colors"
-              >
-                Enter Network
-              </Link>
-            ) : (
-              <>
-                <Link
-                  to="/register"
-                  className="px-6 py-3 rounded-lg bg-accent text-bg font-bold text-sm uppercase tracking-wider hover:bg-accent/80 transition-colors"
-                >
-                  Register
-                </Link>
-                <Link
-                  to="/login"
-                  className="px-6 py-3 rounded-lg border border-accent/30 text-accent font-bold text-sm uppercase tracking-wider hover:bg-accent/10 transition-colors"
-                >
-                  Sign In
-                </Link>
-              </>
-            )}
+          <div className="flex justify-center mb-4">
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="px-6 py-3 rounded-lg border border-line/50 text-text-muted text-sm font-medium hover:bg-surface/50 hover:text-text transition-colors"
+            >
+              Sign Out
+            </button>
           </div>
         </div>
 
         <p className="text-center text-text-muted/40 text-[10px] mt-6 uppercase tracking-widest">
-          The void does not reward hesitation.
+          An oracle&rsquo;s patience is their greatest virtue.
         </p>
       </div>
     </div>

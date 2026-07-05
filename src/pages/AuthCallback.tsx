@@ -1,15 +1,28 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
+import { supabase } from '@/lib/supabase'
 
 export function AuthCallback() {
   const { user, loading } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!loading) {
-      navigate(user ? '/atlas' : '/login', { replace: true })
+    if (loading) return
+
+    if (!user) {
+      navigate('/login', { replace: true })
+      return
     }
+
+    supabase
+      .from('oracles')
+      .select('onboarding_complete')
+      .eq('oracle_id', user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        navigate(data?.onboarding_complete ? '/coming-soon' : '/onboarding', { replace: true })
+      })
   }, [user, loading, navigate])
 
   return (

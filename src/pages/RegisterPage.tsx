@@ -22,7 +22,7 @@ export function RegisterPage() {
       setError(error.message)
       setSubmitting(false)
     } else {
-      navigate(isNewUser ? '/onboarding' : '/atlas', { replace: true })
+      navigate(isNewUser ? '/onboarding' : '/coming-soon', { replace: true })
     }
   }
 
@@ -78,7 +78,7 @@ export function RegisterPage() {
                 onChange={e => setEmail(e.target.value)}
                 required
                 className="w-full px-3 py-2.5 rounded-lg bg-surface border border-line/30 text-text text-sm placeholder:text-text-muted/40 focus:border-accent/50 focus:outline-none transition-colors"
-                placeholder="oracle@meyfate.io"
+                placeholder="oracle@meycult.io"
               />
             </div>
             <div>
