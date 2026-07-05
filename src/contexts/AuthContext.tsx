@@ -61,7 +61,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: fullName ? { data: { full_name: fullName } } : undefined,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        ...(fullName ? { data: { full_name: fullName } } : {}),
+      },
     })
     const isNewUser = !!data?.user && !data?.user.last_sign_in_at
     return { error: error as Error | null, isNewUser }
