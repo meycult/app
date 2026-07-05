@@ -44,7 +44,7 @@ export function ComingSoonPage() {
             </svg>
 
             <div
-              className="text-2xl font-bold tracking-wider leading-tight mt-4"
+              className="text-2xl font-bold tracking-wider leading-tight mt-4 text-center"
               style={{ fontFamily: 'var(--font-logo)' }}
             >
               <span style={{ color: 'var(--color-text)' }}>Mey</span>
@@ -52,7 +52,7 @@ export function ComingSoonPage() {
             </div>
 
             <div
-              className="text-xs uppercase tracking-widest mt-1"
+              className="text-xs uppercase tracking-widest mt-1 text-center"
               style={{ color: 'var(--color-text-muted)' }}
             >
               Quest Markets
