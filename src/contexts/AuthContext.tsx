@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
 import type { Session, User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
-import { useGameStore } from '@/stores/gameStore'
 
 interface AuthContextType {
   user: User | null
@@ -19,15 +18,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
-  const hydrateFromUser = useGameStore((s) => s.hydrateFromUser)
-  const fetchProfile = useGameStore((s) => s.fetchProfile)
-
-  useEffect(() => {
-    if (user) {
-      hydrateFromUser(user)
-      fetchProfile()
-    }
-  }, [user, hydrateFromUser, fetchProfile])
 
   useEffect(() => {
     let mounted = true

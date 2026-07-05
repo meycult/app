@@ -39,15 +39,7 @@ export function VirtueBar({ virtue, value }: { virtue: VirtueName; value: number
         <span className="font-mono text-sm font-bold" style={{ color: meta.color }}>{value}</span>
       </div>
       <div className="w-full bg-surface rounded-full h-3 overflow-hidden">
-        <div
-          className="h-full rounded-full virtue-bar-fill"
-          style={{
-            width: `${pct}%`,
-            '--virtue-color': meta.color,
-            background: `linear-gradient(90deg, ${meta.color}, color-mix(in srgb, ${meta.color} 50%, #ffffff), ${meta.color})`,
-            backgroundSize: '200% 100%',
-          } as React.CSSProperties}
-        />
+        <div className="h-full rounded-full transition-all duration-500" style={{ width: `${pct}%`, backgroundColor: meta.color, opacity: 0.85 }} />
       </div>
       {showTooltip && (
         <div className="absolute z-30 bottom-full left-0 mb-1 w-60 glass rounded-lg p-2 border border-line/30 shadow-lg text-[11px]">

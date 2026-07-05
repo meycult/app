@@ -1,3 +1,3 @@
-export function NetworkPage() {
+export function AtlasPage() {
   return null
 }
