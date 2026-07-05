@@ -31,16 +31,15 @@ export function RarityBadge({ rarity }: { rarity: string }) {
   )
 }
 
-export function Card({ children, className, glow = false, onClick, draggable, onDragStart }: { children: ReactNode; className?: string; glow?: boolean; onClick?: () => void; draggable?: boolean; onDragStart?: (e: React.DragEvent) => void }) {
+export function Card({ children, className, variant, onClick }: { children: ReactNode; className?: string; variant?: 'glow' | 'clarity' | 'depth' | 'reflect'; onClick?: () => void }) {
+  const variantClass = variant ? `card-${variant}` : ''
   return (
     <div
       onClick={onClick}
-      draggable={draggable}
-      onDragStart={onDragStart}
       className={clsx(
-        'glass rounded-xl p-4 transition-all duration-300',
-        glow && 'glow-accent',
-        onClick && 'cursor-pointer hover:border-accent/50 hover:glow-accent',
+        'glass rounded-2xl p-4',
+        variantClass,
+        onClick && 'cursor-pointer',
         className
       )}
     >
@@ -53,7 +52,7 @@ export function Button({ children, variant = 'accent', size = 'md', className, o
   children: ReactNode; variant?: 'accent' | 'premium' | 'ghost' | 'danger'; size?: 'xs' | 'sm' | 'md' | 'lg'; className?: string; onClick?: () => void; disabled?: boolean
 }) {
   const variants = {
-    accent: 'bg-accent hover:bg-accent/80 text-text border-accent/50',
+    accent: 'bg-accent hover:bg-accent/80 text-bg border-accent/50',
     premium: 'bg-premium-500/20 hover:bg-premium-500/30 text-premium-400 border-premium-500/40',
     ghost: 'bg-transparent hover:bg-surface/50 text-text-muted border-line/20',
     danger: 'bg-red-900/30 hover:bg-red-900/50 text-red-400 border-red-700/40',
