@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
 import type { Session, User } from '@supabase/supabase-js'
-import { supabase } from '@/lib/supabase'
+import { supabase, REDIRECT_BASE } from '@/lib/supabase'
 import { useGameStore } from '@/stores/gameStore'
 
 interface AuthContextType {
@@ -62,7 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${REDIRECT_BASE}/auth/callback`,
         ...(fullName ? { data: { full_name: fullName } } : {}),
       },
     })
@@ -74,7 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${REDIRECT_BASE}/auth/callback`,
         queryParams: { access_type: 'offline', prompt: 'consent' },
       },
     })
