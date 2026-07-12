@@ -174,9 +174,10 @@ export function StorePage() {
       <p className="text-[11px] text-text-muted text-center flex items-center justify-center gap-1 flex-wrap"><strong className="text-text/70">No purchase necessary.</strong> Claim free <MeyInfluence /> daily in your <button onClick={() => navigate('/wallet')} className="text-accent underline">Wallet</button>.</p>
 
       <div className="border-t border-line/30 pt-6">
-        <h3 className="text-sm font-bold text-text/60 uppercase tracking-wider mb-3 text-center">Official Gear — Physical Merch</h3>
-        <p className="text-xs text-text-muted text-center mb-4">Shipped worldwide. Visit <a href="https://merch.meycult.com" target="_blank" rel="noopener noreferrer" className="text-accent underline">merch.meycult.com</a> to browse and order.</p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          <h3 className="text-sm font-bold text-text/60 uppercase tracking-wider mb-3 text-center">Official Gear — Physical Merch</h3>
+          <p className="text-xs text-text-muted text-center mb-2">Shipped worldwide. Visit <a href="https://merch.meycult.com" target="_blank" rel="noopener noreferrer" className="text-accent underline">merch.meycult.com</a> to browse and order.</p>
+          <p className="text-[10px] text-accent/80 text-center mb-4 max-w-lg mx-auto">Every purchase directly funds development. When mainnet launches, all merch buyers receive <MeyFate /> equivalent to their order — support the project, earn your stake.</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {[
             { n: 'Cult Tee', i: '/products/cult-tee-meycult-0.jpg' },
             { n: 'Cult Mug', i: '/products/cult-mug-meycult-0.jpg' },
