@@ -165,12 +165,43 @@ export function StorePage() {
       </div>
 
       <div>
-        <h3 className="text-sm font-bold text-text/60 uppercase tracking-wider mb-3">Supporter Packs <span className="text-[10px] text-text-muted normal-case">— one-time, includes merch + future loot drops</span></h3>
+        <h3 className="text-sm font-bold text-text/60 uppercase tracking-wider mb-3">Supporter Packs <span className="text-[10px] text-text-muted normal-case">— one-time, incl. merch + future loot</span></h3>
+        <p className="text-[10px] text-amber-400/80 mb-3">⚠️ Supporter pack merch is not available on testnet. Packs give MeyInfluence + MeyFate only.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">{supporter.map(renderPack)}</div>
       </div>
 
       <p className="text-[11px] text-text-muted text-center">Supporter packs accrue new digital cosmetics over time — buy once, keep earning loot as we ship content.</p>
       <p className="text-[11px] text-text-muted text-center flex items-center justify-center gap-1 flex-wrap"><strong className="text-text/70">No purchase necessary.</strong> Claim free <MeyInfluence /> daily in your <button onClick={() => navigate('/wallet')} className="text-accent underline">Wallet</button>.</p>
+
+      <div className="border-t border-line/30 pt-6">
+        <h3 className="text-sm font-bold text-text/60 uppercase tracking-wider mb-3 text-center">Official Gear — Physical Merch</h3>
+        <p className="text-xs text-text-muted text-center mb-4">Shipped worldwide. Visit <a href="https://merch.meycult.com" target="_blank" rel="noopener noreferrer" className="text-accent underline">merch.meycult.com</a> to browse and order.</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          {[
+            { n: 'Cult Tee', i: '/products/cult-tee-meycult-0.jpg' },
+            { n: 'Cult Mug', i: '/products/cult-mug-meycult-0.jpg' },
+            { n: 'Cult Beanie', i: '/products/cult-beanie-meycult-0.jpg' },
+            { n: 'Cult Hoodie', i: '/products/cult-hoodie-meycult-0.jpg' },
+            { n: 'Cult Joggers', i: '/products/cult-joggers-meycult-0.jpg' },
+          ].map((p) => (
+            <a key={p.n} href="https://merch.meycult.com" target="_blank" rel="noopener noreferrer"
+              className="glass rounded-xl border border-line/40 overflow-hidden hover:border-accent/40 transition-all group">
+              <div className="aspect-square bg-surface/20 flex items-center justify-center p-3">
+                <img src={p.i} alt={p.n} className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+              </div>
+              <div className="p-2 text-center border-t border-line/30">
+                <p className="text-[10px] font-medium text-text uppercase tracking-wider">{p.n}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+        <div className="text-center mt-4">
+          <a href="https://merch.meycult.com" target="_blank" rel="noopener noreferrer"
+            className="px-4 py-2 rounded-lg text-xs font-bold bg-accent/20 border border-accent/40 text-accent hover:bg-accent/30 transition-all inline-block">
+            Shop Merch →
+          </a>
+        </div>
+      </div>
     </div>
   )
 }
