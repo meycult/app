@@ -22,7 +22,7 @@ export function RegisterPage() {
       setError(error.message)
       setSubmitting(false)
     } else {
-      navigate(isNewUser ? '/onboarding' : '/coming-soon', { replace: true })
+      navigate(isNewUser ? '/onboarding' : '/quests', { replace: true })
     }
   }
 

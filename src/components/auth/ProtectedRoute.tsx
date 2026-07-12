@@ -1,10 +1,10 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
-import { useGameStore } from '@/stores/gameStore'
+import { usePlayerStore } from '@/stores/playerStore'
 
 export function ProtectedRoute() {
   const { user, loading } = useAuth()
-  const onboardingComplete = useGameStore((s) => s.player.onboardingComplete)
+  const onboardingComplete = usePlayerStore((s) => s.player.onboardingComplete)
   const location = useLocation()
 
   if (loading) {

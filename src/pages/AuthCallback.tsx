@@ -16,12 +16,12 @@ export function AuthCallback() {
     }
 
     supabase
-      .from('oracles')
+      .from('players')
       .select('onboarding_complete')
-      .eq('oracle_id', user.id)
+      .eq('id', user.id)
       .maybeSingle()
       .then(({ data }) => {
-        navigate(data?.onboarding_complete ? '/coming-soon' : '/onboarding', { replace: true })
+        navigate(data?.onboarding_complete ? '/quests' : '/onboarding', { replace: true })
       })
   }, [user, loading, navigate])
 

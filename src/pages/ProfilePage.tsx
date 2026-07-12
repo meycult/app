@@ -1,25 +1,26 @@
 import { useNavigate } from 'react-router-dom'
-import { Shield, Clock, CheckCircle, XCircle, Package, Sparkles, ChevronDown, ChevronUp, Search } from 'lucide-react'
-import { useState, useMemo } from 'react'
-import { useGameStore } from '@/stores/gameStore'
-import { Card, RarityBadge, Button } from '@/components/ui/ui'
-import { VirtueBar } from '@/components/ui/virtues'
+import { Shield, Clock, CheckCircle, XCircle, Package, ChevronDown, ChevronUp, Search } from 'lucide-react'
+import { useState, useMemo, useEffect } from 'react'
+import { usePlayerStore } from '@/stores/playerStore'
+import { useOracleStore } from '@/stores/oracleStore'
+import { useWagerStore } from '@/stores/wagerStore'
+import { Card, RarityBadge } from '@/components/ui/ui'
 import { ChipGroup, DropdownFilter } from '@/components/ui/filters'
 import { TierBadge } from '@/components/ui/badges'
 import { clsx } from 'clsx'
 import type { VirtueName, PredictionResult, BadgeCategory } from '@/types'
 
+function ComingSoon() {
+  return <span className="text-[10px] px-2 py-0.5 rounded-full bg-line/30 text-text-muted ml-2 align-middle uppercase tracking-wider">Coming soon</span>
+}
+
 // ── Sample data for sections not yet in DB ──
 
-const VIRTUE_ORDER: VirtueName[] = ['wisdom', 'courage', 'prudence', 'skill', 'temperance', 'justice']
-
 const CULT_INFO: Record<string, { name: string; description: string; color: string; linkedVirtue: string }> = {
-  architects: { name: 'The Architects', description: 'Masters of foresight and data. They see the future and build it.', color: '#06b6d4', linkedVirtue: 'wisdom' },
-  wardens: { name: 'The Wardens', description: 'Guardians against chaos. Slow, steady, unbreakable.', color: '#f59e0b', linkedVirtue: 'prudence' },
-  legion: { name: 'The Legion', description: 'Relentless force of conviction. Go big or go home.', color: '#ef4444', linkedVirtue: 'courage' },
-  operatives: { name: 'The Operatives', description: 'Precision specialists. Speed, timing, adaptability.', color: '#10b981', linkedVirtue: 'skill' },
-  tribunal: { name: 'The Tribunal', description: 'Arbiters of fate. High stakes, absolute conviction.', color: '#cbd5e1', linkedVirtue: 'justice' },
-  monastics: { name: 'The Monastics', description: 'Disciplined observers. Patience is their weapon.', color: '#8b5cf6', linkedVirtue: 'temperance' },
+  driftless: { name: 'The Driftless', description: 'Air · Clarity — Masters of detachment. They see through the fog.', color: '#06b6d4', linkedVirtue: 'clarity' },
+  leviathan: { name: 'Leviathan', description: 'Water · Humility — Grace flows downward to the lowest.', color: '#3b82f6', linkedVirtue: 'humility' },
+  masonry: { name: 'The Masonry', description: 'Earth · Endurance — They bear the weight. The ground does not flee.', color: '#f59e0b', linkedVirtue: 'endurance' },
+  recurrence: { name: 'The Recurrence', description: 'Fire · Overcoming — Burn, and become. Loss is fuel.', color: '#ef4444', linkedVirtue: 'overcoming' },
 }
 
 const SAMPLE_ITEMS = [
@@ -80,16 +81,22 @@ function Tooltip({ children, content }: { children: React.ReactNode; content: Re
 }
 
 export function OraclePage() {
-  const player = useGameStore((s) => s.player)
+  const player = usePlayerStore((s) => s.player)
+  const oracle = useOracleStore((s) => s.oracle)
+  const wagers = useWagerStore((s) => s.wagers)
+  const fetchWagers = useWagerStore((s) => s.fetchMine)
   const navigate = useNavigate()
 
-  const cult = CULT_INFO[player.cult] ?? { name: 'Uninitiated', description: 'Join a cult to unlock your powers.', color: '#666', linkedVirtue: 'wisdom' }
+  useEffect(() => { if (player.id) fetchWagers(player.id) }, [player.id, fetchWagers])
 
-  const wonCount = SAMPLE_PREDICTIONS.filter((p) => p.result === 'WON').length
-  const lostCount = SAMPLE_PREDICTIONS.filter((p) => p.result === 'LOST').length
-  const pendingCount = SAMPLE_PREDICTIONS.filter((p) => p.result === 'PENDING').length
+  const cult = CULT_INFO[oracle.cult] ?? { name: 'Uninitiated', description: 'Join a cult to unlock your powers.', color: '#666', linkedVirtue: 'wisdom' }
+
+  // Real win/loss stats from the player's on-chain-backed wagers
+  const wonCount = wagers.filter((w) => w.result === 'WON').length
+  const lostCount = wagers.filter((w) => w.result === 'LOST').length
+  const pendingCount = wagers.filter((w) => w.result === 'PENDING').length
   const winRate = (wonCount + lostCount) > 0 ? Math.round((wonCount / (wonCount + lostCount)) * 100) : 0
-  const netPL = SAMPLE_PREDICTIONS.reduce((sum, p) => sum + p.netProfit, 0)
+  const netPL = wagers.reduce((sum, w) => sum + (w.netProfit || 0), 0)
 
   const activeTax = SAMPLE_ITEMS.filter((i) => ['item-scroll', 'item-charm'].includes(i.id)).reduce((sum, i) => sum + i.passiveCost, 0)
 
@@ -136,16 +143,13 @@ export function OraclePage() {
   const visibleChains = badgeCat === 'ALL' ? SAMPLE_BADGE_CHAINS : SAMPLE_BADGE_CHAINS.filter((c) => c.category === badgeCat)
 
   return (
-    <div className="max-w-5xl space-y-6 pb-16">
+    <div className="max-w-5xl mx-auto space-y-6 pb-16">
       {/* ── Header ── */}
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold text-accent">Profile</h2>
-          <p className="text-text-muted mt-1">Your oracular character sheet</p>
+          <p className="text-text-muted mt-1">Your oracular character sheet — carved in stone, reforged by fire.</p>
         </div>
-        <Button variant="ghost" onClick={() => navigate('/build')}>
-          <Sparkles size={14} className="mr-1" /> Skill Tree ({player.skillPoints} pts)
-        </Button>
       </div>
 
       {/* ── Identity Bar ── */}
@@ -157,46 +161,29 @@ export function OraclePage() {
           <h3 className="text-2xl font-bold">{player.alias || player.handle || 'Oracle'}</h3>
           {player.alias && <p className="text-xs text-text-muted">@{player.handle}</p>}
           <div className="flex items-center gap-4 mt-1 flex-wrap">
-            <span className="text-text-muted text-sm">Lv.{player.level}</span>
-            <span className="text-premium-400 font-mono text-sm">{player.insightPoints} MP</span>
+            <span className="text-text-muted text-sm">Lv.{oracle.level}</span>
+            <span className="text-premium-400 font-mono text-sm">{oracle.xp} XP</span>
             <Tooltip content={<><p className="font-medium" style={{ color: cult.color }}>{cult.name}</p><p className="text-text-muted">{cult.description}</p><p className="text-text-muted mt-1 capitalize">Linked virtue: {cult.linkedVirtue}</p></>}>
               <span className="text-sm flex items-center gap-1 cursor-help" style={{ color: cult.color }}><Shield size={14} /> {cult.name}</span>
             </Tooltip>
-            <span className="text-sm text-text-muted">{player.skillPoints} skill pts</span>
           </div>
           <div className="w-full bg-surface rounded-full h-2 mt-3">
-            <div className="bg-accent h-2 rounded-full xp-fill" style={{ width: `${player.xp % 100}%` }} />
+            <div className="bg-accent h-2 rounded-full xp-fill" style={{ width: `${oracle.xp % 100}%` }} />
           </div>
         </div>
         <div className="text-right shrink-0">
           <p className="text-xs text-text-muted">Win Rate</p>
           <p className="text-2xl font-bold text-green-400">{winRate}%</p>
           <p className="text-xs text-text-muted">{wonCount}W &middot; {lostCount}L &middot; {pendingCount}P</p>
-          <p className={clsx('text-xs font-mono mt-1', netPL >= 0 ? 'text-green-400' : 'text-red-400')}>{netPL >= 0 ? '+' : ''}{netPL} MP net</p>
+          <p className={clsx('text-xs font-mono mt-1', netPL >= 0 ? 'text-green-400' : 'text-red-400')}>{netPL >= 0 ? '+' : ''}{netPL} Fate net</p>
         </div>
       </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* ── Virtues ── */}
-        <Card>
-          <h3 className="text-lg font-bold mb-4 text-text/80">Virtues</h3>
-          <div className="space-y-4">
-            {VIRTUE_ORDER.map((v) => (
-              <VirtueBar key={v} virtue={v} value={player.virtues[v]} />
-            ))}
-          </div>
-          <div className="mt-4 pt-3 border-t border-line/50 flex items-center justify-between">
-            <span className="text-xs text-text-muted">Total Virtue Power</span>
-            <span className="font-mono text-sm text-premium-400">
-              {VIRTUE_ORDER.reduce((sum, v) => sum + player.virtues[v], 0)} / 120
-            </span>
-          </div>
-        </Card>
-
         {/* ── Equipped Items + Followed Heroes ── */}
         <div className="space-y-6">
           <Card>
-            <h3 className="text-lg font-bold mb-4">Equipped Items</h3>
+            <h3 className="text-lg font-bold mb-4">Equipped Items <ComingSoon /></h3>
             <div className="space-y-2">
               {SAMPLE_FOLLOWED_HEROES.map((hero) => {
                 const itemId = hero.slotType === 'vision' ? 'item-charm' : hero.slotType === 'capital' ? 'item-scroll' : undefined
@@ -229,7 +216,7 @@ export function OraclePage() {
           </Card>
 
           <Card>
-            <h3 className="text-lg font-bold mb-4">Heroes Followed</h3>
+            <h3 className="text-lg font-bold mb-4">Heroes Followed <ComingSoon /></h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {SAMPLE_FOLLOWED_HEROES.map((hero) => (
                 <Tooltip key={hero.id} content={<><p className="font-medium">{hero.name}</p><p className="text-text-muted capitalize">Unlocks: {hero.slotType} equipment slot</p></>}>
@@ -253,7 +240,7 @@ export function OraclePage() {
         <Card className="lg:col-span-2">
           <div className="flex items-center gap-2 mb-3">
             <Package size={16} className="text-accent" />
-            <h3 className="text-lg font-bold">Inventory</h3>
+            <h3 className="text-lg font-bold">Inventory <ComingSoon /></h3>
             <span className="text-xs text-text-muted ml-auto">{SAMPLE_ITEMS.length} items</span>
           </div>
           <div className="flex items-center gap-2 flex-wrap mb-3">
@@ -301,7 +288,7 @@ export function OraclePage() {
 
         {/* ── Badges ── */}
         <Card className="lg:col-span-2">
-          <h3 className="text-lg font-bold mb-4">Badges</h3>
+          <h3 className="text-lg font-bold mb-4">Badges <ComingSoon /></h3>
           <div className="flex gap-2 mb-4 flex-wrap">
             {(['ALL', 'VIRTUE', 'LOYALTY', 'COLLECTION', 'MARKET'] as const).map((cat) => (
               <button

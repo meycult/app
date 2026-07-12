@@ -1,25 +1,27 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate, NavLink } from 'react-router-dom'
-import { Map, Wrench, ShoppingBag, Tag, User, Settings, UserCog, ChevronUp } from 'lucide-react'
+import { Map, Wallet, ShoppingBag, User, Settings, UserCog, ChevronUp } from 'lucide-react'
 import { clsx } from 'clsx'
-import { useGameStore } from '@/stores/gameStore'
+import { usePlayerStore } from '@/stores/playerStore'
+import { useOracleStore } from '@/stores/oracleStore'
 import Logo from '@/components/Logo'
+import { WalletButton } from '@/wallet/WalletButton'
+import { BalanceDisplay } from '@/wallet/BalanceDisplay'
 
 const navItems = [
-  { to: '/network', label: 'Network', icon: Map },
-  { to: '/build', label: 'Build', icon: Wrench },
-  { to: '/store', label: 'Store', icon: ShoppingBag },
-  { to: '/market', label: 'Market', icon: Tag },
+  { to: '/quests', label: 'Quests', icon: Map },
+  { to: '/wallet', label: 'Wallet', icon: Wallet },
+  { to: '/store', label: 'Shop', icon: ShoppingBag },
 ]
 
 const userMenuItems = [
   { to: '/profile', label: 'Profile', icon: User },
   { to: '/account', label: 'Account', icon: UserCog },
-  { to: '/admin', label: 'Admin', icon: Settings },
 ]
 
-export function Sidebar() {
-  const player = useGameStore(s => s.player)
+export function Sidebar({ onNavigate }: { onNavigate?: () => void } = {}) {
+  const player = usePlayerStore(s => s.player)
+  const oracle = useOracleStore(s => s.oracle)
   const navigate = useNavigate()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -42,12 +44,18 @@ export function Sidebar() {
         <Logo size={20} />
       </div>
 
+      <div className="px-4 pt-4 space-y-3 border-b border-line/50 pb-4">
+        <WalletButton />
+        <BalanceDisplay />
+      </div>
+
       <nav className="flex-1 p-4 space-y-1">
         {navItems.map(item => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.to === '/'}
+            onClick={onNavigate}
             className={({ isActive }) => clsx(
               'flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200',
               isActive
@@ -69,7 +77,7 @@ export function Sidebar() {
                 <NavLink
                   key={item.to}
                   to={item.to}
-                  onClick={() => setDropdownOpen(false)}
+                  onClick={() => { setDropdownOpen(false); onNavigate?.() }}
                   className={({ isActive }) => clsx(
                     'flex items-center gap-3 px-4 py-3 text-sm font-medium transition-colors',
                     isActive ? 'bg-accent/20 text-accent' : 'text-text-muted hover:text-text hover:bg-accent/10'
@@ -79,18 +87,36 @@ export function Sidebar() {
                   {item.label}
                 </NavLink>
               ))}
+              {player.isAdmin && (
+                <NavLink
+                  to="/admin"
+                  onClick={() => { setDropdownOpen(false); onNavigate?.() }}
+                  className={({ isActive }) => clsx(
+                    'flex items-center gap-3 px-4 py-3 text-sm font-medium transition-colors border-t border-line/50',
+                    isActive ? 'bg-accent/20 text-accent' : 'text-text-muted hover:text-text hover:bg-accent/10'
+                  )}
+                >
+                  <Settings size={16} />
+                  Admin
+                </NavLink>
+              )}
             </div>
           </div>
         )}
 
         <div className="glass rounded-xl p-3 cursor-pointer" onClick={() => navigate('/profile')}>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center text-accent font-bold shrink-0 text-base">
-              {(player.alias || player.handle || 'O').charAt(0).toUpperCase()}
+            <div className="w-10 h-10 rounded-full bg-accent/20 border border-accent/40 shrink-0 overflow-hidden">
+              <img
+                src={player.avatarUrl || '/icon.png'}
+                alt=""
+                className="w-full h-full object-cover"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/icon.png' }}
+              />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-sm font-medium truncate">{player.alias || player.handle}</p>
-              <p className="text-xs text-accent/60">Lv.{player.level} · {player.insightPoints} MP</p>
+              <p className="text-xs text-accent/60">Lv.{oracle.level} · {oracle.xp} XP</p>
             </div>
             <button
               onClick={(e) => { e.stopPropagation(); setDropdownOpen(!dropdownOpen) }}
@@ -100,7 +126,7 @@ export function Sidebar() {
             </button>
           </div>
           <div className="w-full bg-surface rounded-full h-1.5 mt-2">
-            <div className="bg-accent h-1.5 rounded-full" style={{ width: `${(player.xp % 100)}%` }} />
+            <div className="bg-accent h-1.5 rounded-full" style={{ width: `${(oracle.xp % 100)}%` }} />
           </div>
         </div>
       </div>

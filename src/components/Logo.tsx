@@ -38,7 +38,7 @@ export default function Logo({ size = 24, className }: { size?: number; classNam
           className="text-[10px] uppercase tracking-widest mt-0.5"
           style={{ color: 'var(--color-text-muted)' }}
         >
-          Quest Markets
+          Wager &amp; Join
         </div>
       </div>
     </div>

@@ -1,24 +1,24 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
-import { useGameStore } from '@/stores/gameStore'
+import { usePlayerStore } from '@/stores/playerStore'
+import { useOracleStore } from '@/stores/oracleStore'
 import { supabase } from '@/lib/supabase'
 import { ParticleCanvas } from '@/components/decor/ParticleCanvas'
 import Logo from '@/components/Logo'
 import { clsx } from 'clsx'
 
 const CULTS = [
-  { id: 'architects', name: 'The Architects', description: 'Masters of foresight and data. They see the future and build it.', color: '#06b6d4', virtue: 'Wisdom', bonus: '+10% payout on quests held >48h' },
-  { id: 'wardens', name: 'The Wardens', description: 'Guardians against chaos. Slow, steady, unbreakable.', color: '#f59e0b', virtue: 'Prudence', bonus: '-10% loss on failed predictions' },
-  { id: 'legion', name: 'The Legion', description: 'Relentless force of conviction. Go big or go home.', color: '#ef4444', virtue: 'Courage', bonus: '+25% on bets >300, -10% on bets <100' },
-  { id: 'operatives', name: 'The Operatives', description: 'Precision specialists. Speed, timing, adaptability.', color: '#10b981', virtue: 'Skill', bonus: '+5 per quest completed regardless of outcome' },
-  { id: 'tribunal', name: 'The Tribunal', description: 'Arbiters of fate. High stakes, absolute conviction.', color: '#cbd5e1', virtue: 'Justice', bonus: '+15% payout when betting against 70%+ consensus' },
-  { id: 'monastics', name: 'The Monastics', description: 'Disciplined observers. Patience is their weapon.', color: '#8b5cf6', virtue: 'Temperance', bonus: '+15% payout on quests in your most-consistent category' },
+  { id: 'driftless', name: 'The Driftless', description: 'Air · Clarity — Empty, yet inexhaustible. Masters of detachment who see through the fog.', color: '#06b6d4', virtue: 'Clarity', bonus: '+10% when holding positions untouched for a cycle' },
+  { id: 'leviathan', name: 'Leviathan', description: 'Water · Humility — Grace flows downward. The lowest place is the highest.', color: '#3b82f6', virtue: 'Humility', bonus: 'Grace Pool: tithe winnings for mercy on ruin' },
+  { id: 'masonry', name: 'The Masonry', description: 'Earth · Endurance — Bear and forbear. The ground does not flee the storm.', color: '#f59e0b', virtue: 'Endurance', bonus: 'Grounding Lock: outcome-independent returns' },
+  { id: 'recurrence', name: 'The Recurrence', description: 'Fire · Overcoming — Burn, and become. Loss is the only fuel that matters.', color: '#ef4444', virtue: 'Overcoming', bonus: 'Will-to-Power: losses multiply future payout' },
 ]
 
 export function OnboardingPage() {
   const { user } = useAuth()
-  const completeOnboarding = useGameStore((s) => s.completeOnboarding)
+  const completePlayerOnboarding = usePlayerStore((s) => s.completeOnboarding)
+  const initializeOracle = useOracleStore((s) => s.initialize)
   const navigate = useNavigate()
 
   const [step, setStep] = useState(0)
@@ -33,19 +33,19 @@ export function OnboardingPage() {
     if (val.length < 3) { setHandleStatus('idle'); return }
     setHandleStatus('checking')
     const { data } = await supabase
-      .from('oracles')
-      .select('handle, oracle_id')
+      .from('players')
+      .select('handle, id')
       .eq('handle', val)
       .maybeSingle()
-    if (!data || (user && data.oracle_id === user.id)) {
+    if (!data || (user && data.id === user.id)) {
       setHandleStatus('available')
     } else {
       setHandleStatus('taken')
       const base = val.replace(/\d+$/, '')
       for (let num = 1; num < 50; num++) {
         const { data: d } = await supabase
-          .from('oracles')
-          .select('oracle_id')
+          .from('players')
+          .select('id')
           .eq('handle', `${base}${num}`)
           .maybeSingle()
         if (!d) {
@@ -68,9 +68,9 @@ export function OnboardingPage() {
     setAlias('')
 
     supabase
-      .from('oracle_onboardings')
+      .from('player_onboarding')
       .select('*')
-      .eq('oracle_id', user.id)
+      .eq('player_id', user.id)
       .single()
       .then(({ data }) => {
         if (data) {
@@ -93,14 +93,14 @@ export function OnboardingPage() {
 
   const saveOnboarding = async (partial: { step?: number; chosen_handle?: string; chosen_alias?: string; chosen_cult?: string }) => {
     if (!user) return
-    await supabase.from('oracle_onboardings').upsert({
-      oracle_id: user.id,
+    await supabase.from('player_onboarding').upsert({
+      player_id: user.id,
       step,
       chosen_handle: partial.chosen_handle ?? handle,
       chosen_alias: partial.chosen_alias ?? alias,
       chosen_cult: partial.chosen_cult ?? selectedCult,
       ...partial,
-    }, { onConflict: 'oracle_id' })
+    }, { onConflict: 'player_id' })
   }
 
   const handleHandleChange = (val: string) => {
@@ -129,8 +129,13 @@ export function OnboardingPage() {
 
   const handleFinish = async () => {
     setSaving(true)
-    await completeOnboarding(handle, selectedCult, alias || undefined)
-    navigate('/coming-soon', { replace: true })
+    await completePlayerOnboarding(handle, alias || undefined)
+    if (user) await initializeOracle(user.id, selectedCult)
+    await supabase
+      .from('player_onboarding')
+      .delete()
+      .eq('player_id', user!.id)
+    navigate('/quests', { replace: true })
   }
 
   if (!loaded) {

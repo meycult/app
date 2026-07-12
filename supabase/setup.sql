@@ -1,12 +1,11 @@
 -- ══════════════════════════════════════════════
---  MeyCult — Database Setup (LEGACY)
---  Replaced by migration.sql + seed.sql + rls.sql
---  See supabase/ directory for current schema
+--  MeyCult — Database Setup
+--  Run migration.sql in the Supabase SQL Editor
 -- ══════════════════════════════════════════════
 
--- Run these in order in Supabase SQL Editor:
---   1. migration.sql  — Drops old schema, creates 9 tables + trigger
---   2. seed.sql       — Inserts placeholder quests + 8 badge chains
---   3. rls.sql        — Creates all RLS policies
+-- Run: migration.sql
+--   — Drops old tables (oracle_onboardings, heroes, virtues, legacy oracles)
+--   — Creates new tables (players, oracles, player_onboarding)
+--   — Sets up RLS policies
 
-SELECT 'Use migration.sql instead — this file is preserved for reference only' as status;
+SELECT 'See migration.sql for the current schema' as status;

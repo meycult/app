@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
-import { useGameStore } from '@/stores/gameStore'
+import { usePlayerStore } from '@/stores/playerStore'
+import { useOracleStore } from '@/stores/oracleStore'
 import { TabBar, Button, Card } from '@/components/ui/ui'
 
 type AccountTab = 'profile' | 'appearance' | 'security'
@@ -28,8 +29,9 @@ function Setting({ label, desc, value, children }: { label: string; desc?: strin
 
 export function AccountPage() {
   const { user, signOut } = useAuth()
-  const player = useGameStore((s) => s.player)
-  const updateProfile = useGameStore((s) => s.updateProfile)
+  const player = usePlayerStore((s) => s.player)
+  const oracle = useOracleStore((s) => s.oracle)
+  const updateAlias = usePlayerStore((s) => s.updateAlias)
   const navigate = useNavigate()
   const [tab, setTab] = useState<AccountTab>('profile')
   const [editAlias, setEditAlias] = useState(player.alias || player.handle || '')
@@ -37,7 +39,7 @@ export function AccountPage() {
 
   const handleSaveProfile = async () => {
     setSaving(true)
-    await updateProfile({ alias: editAlias || undefined })
+    await updateAlias(editAlias || player.handle)
     setSaving(false)
   }
 
@@ -47,8 +49,11 @@ export function AccountPage() {
   }
 
   return (
-    <div className="max-w-5xl space-y-6 pb-16">
-      <h2 className="text-3xl font-bold text-accent">Account</h2>
+    <div className="max-w-5xl mx-auto space-y-6 pb-16">
+      <div>
+        <h2 className="text-3xl font-bold text-accent">Account</h2>
+        <p className="text-text-muted mt-1">Your vessel. Your sigil. Your oath.</p>
+      </div>
       <TabBar tabs={TABS} active={tab} onChange={setTab} />
 
       {tab === 'profile' && (
@@ -76,7 +81,7 @@ export function AccountPage() {
               <span className="text-text/50">{user?.email}</span>
             </Setting>
             <Setting label="Cult" desc="Cult selection coming soon">
-              <span className="text-text/60 capitalize">{player.cult || 'Uninitiated'}</span>
+              <span className="text-text/60 capitalize">{oracle.cult || 'Uninitiated'}</span>
             </Setting>
             <Setting label="Joined">
               <span className="text-text/50">
@@ -96,26 +101,13 @@ export function AccountPage() {
       {tab === 'appearance' && (
         <div className="space-y-4">
           <Card>
-            <h3 className="text-sm font-bold text-text/70 uppercase tracking-wider mb-3">Cosmetic Slots</h3>
-            {[
-              { label: 'Title', value: player.title },
-              { label: 'Frame', value: player.frame },
-              { label: 'Name Color', value: player.nameColor },
-              { label: 'Profile Background', value: player.profileBackground },
-              { label: 'Prediction Flair', value: player.predictionFlair },
-              { label: 'Avatar Decoration', value: player.avatarDecoration },
-              { label: 'Badge Effect', value: player.badgeEffect },
-            ].map((slot) => (
-              <Setting key={slot.label} label={slot.label}>
-                <span className="text-text-muted text-xs">{slot.value || '(none)'}</span>
-              </Setting>
-            ))}
+            <h3 className="text-sm font-bold text-text/70 uppercase tracking-wider mb-3">Cosmetics</h3>
+            <p className="text-xs text-text-muted">
+              Cosmetics coming soon. Visit the{' '}
+              <button onClick={() => navigate('/store')} className="text-accent hover:underline">Store</button>
+              {' '}to preview items.
+            </p>
           </Card>
-          <p className="text-xs text-text-muted">
-            Visit the{' '}
-            <button onClick={() => navigate('/store')} className="text-accent hover:underline">Store</button>
-            {' '}to acquire cosmetics.
-          </p>
         </div>
       )}
 

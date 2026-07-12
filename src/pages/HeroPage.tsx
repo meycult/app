@@ -48,27 +48,18 @@ export function LandingPage() {
               className="text-xs uppercase tracking-widest mt-1 text-center"
               style={{ color: 'var(--color-text-muted)' }}
             >
-              Quest Markets
+              Wager &amp; Join
             </div>
           </div>
 
-          <p className="text-center text-text text-xs leading-relaxed mb-4">
-            <span style={{ fontFamily: 'var(--font-logo)', fontWeight: 700 }}>
-              <span style={{ color: 'var(--color-text)' }}>Mey</span>
-              <span style={{ color: 'var(--color-accent)', textShadow: '0 0 12px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.2)' }}>Cult</span>
-            </span>
-            {' '}is still being forged. The quest markets are not yet open.
-            Create an account to be notified when the network awakens.
-          </p>
-
           <p className="text-center text-text-muted text-sm leading-relaxed mb-8 italic">
-            &ldquo;The void calls. The prophecies await. The markets are forming.&rdquo;
+            &ldquo;The void calls. The prophecies await.&rdquo;
           </p>
 
           <div className="flex items-center justify-center gap-4">
             {user ? (
               <Link
-                to="/coming-soon"
+                to="/quests"
                 className="px-6 py-3 rounded-lg bg-accent text-bg font-bold text-sm uppercase tracking-wider hover:bg-accent/80 transition-colors"
               >
                 Enter Network

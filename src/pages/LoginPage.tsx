@@ -22,7 +22,7 @@ export function LoginPage() {
       setError(error.message)
       setSubmitting(false)
     } else {
-      navigate('/coming-soon', { replace: true })
+      navigate('/quests', { replace: true })
     }
   }
 

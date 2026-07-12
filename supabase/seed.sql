@@ -1,0 +1,286 @@
+-- ══════════════════════════════════════════════
+--  MeyCult — Seed Data
+--  Heroes, Items, Quests from prototype
+-- ══════════════════════════════════════════════
+
+-- 1. HEROES
+INSERT INTO heroes (hero_id, handle, name, title, bio, cult, virtues, mp) VALUES
+('a0000000-0000-0000-0000-000000000001', '@elonmusk', 'Elon Musk', 'The Technoking',
+ 'CEO of Tesla and SpaceX. X owner. Crypto influencer. Mars colonist aspirant.',
+ 'legion', '{"wisdom":18,"courage":14,"prudence":8,"skill":16,"temperance":6,"justice":10}', 200),
+('a0000000-0000-0000-0000-000000000002', '@realdonaldtrump', 'Donald Trump', 'The Deal Maker',
+ '45th & 47th US President. Real estate mogul. Master of the deal.',
+ 'legion', '{"wisdom":10,"courage":18,"prudence":8,"skill":10,"temperance":4,"justice":6}', 180),
+('a0000000-0000-0000-0000-000000000003', '@gretathunberg', 'Greta Thunberg', 'Climate Crusader',
+ 'Environmental activist. Fridays for Future founder. UN speech icon.',
+ 'wardens', '{"wisdom":14,"courage":12,"prudence":10,"skill":12,"temperance":18,"justice":16}', 240),
+('a0000000-0000-0000-0000-000000000004', '@sama', 'Sam Altman', 'The AI Oracle',
+ 'OpenAI CEO. ChatGPT creator. AGI prophet. Nuclear fusion investor.',
+ 'architects', '{"wisdom":20,"courage":8,"prudence":14,"skill":14,"temperance":10,"justice":10}', 220),
+('a0000000-0000-0000-0000-000000000005', '@putin', 'Vladimir Putin', 'The Strongman',
+ 'Russian President. Ex-KGB. Judo black belt. Geopolitical chessmaster.',
+ 'tribunal', '{"wisdom":16,"courage":18,"prudence":14,"skill":10,"temperance":12,"justice":4}', 210),
+('a0000000-0000-0000-0000-000000000006', '@taylorswift13', 'Taylor Swift', 'The Pop Sovereign',
+ '14x Grammy winner. Eras Tour billionaire. Economy-mover.',
+ 'operatives', '{"wisdom":14,"courage":10,"prudence":12,"skill":18,"temperance":14,"justice":16}', 250),
+('a0000000-0000-0000-0000-000000000007', '@warrenbuffett', 'Warren Buffett', 'The Oracle of Omaha',
+ 'Berkshire Hathaway CEO. Value investing legend. $147B net worth.',
+ 'architects', '{"wisdom":18,"courage":6,"prudence":20,"skill":8,"temperance":16,"justice":12}', 240),
+('a0000000-0000-0000-0000-000000000008', '@satoshi', 'Satoshi Nakamoto', 'The Phantom',
+ 'Bitcoin creator. Unknown identity. ~1M BTC untouched.',
+ 'operatives', '{"wisdom":20,"courage":4,"prudence":10,"skill":18,"temperance":18,"justice":8}', 230),
+('a0000000-0000-0000-0000-000000000009', '@zuck', 'Mark Zuckerberg', 'The Metarchitect',
+ 'Meta CEO. Facebook founder. Metaverse builder. Threads launcher.',
+ 'architects', '{"wisdom":18,"courage":10,"prudence":10,"skill":14,"temperance":8,"justice":8}', 190),
+('a0000000-0000-0000-0000-000000000010', '@beyonce', 'Beyoncé', 'Queen Bey',
+ '32x Grammy winner. Renaissance architect. Cultural icon.',
+ 'monastics', '{"wisdom":14,"courage":12,"prudence":14,"skill":16,"temperance":16,"justice":18}', 260);
+
+-- 2. ITEMS
+INSERT INTO items (item_id, name, description, icon, flavor_text, item_class, slot_type, rarity, stat_bonuses, passive_cost, unique_effect) VALUES
+-- MYTHIC
+('b0000000-0000-0000-0000-000000000001', 'Tech Visor', 'A holographic visor that overlays market data streams.', 'Glasses', 'The future renders in real-time.', 'equipment', 'vision', 'mythic', '{"wisdom":5,"skill":2}', 12, '{"name":"Tech Prophet","description":"+20% payout on all Tech quests.","mechanic":"bonus_payout_category","mechanicValue":1.20,"mechanicTarget":"TECH"}'),
+('b0000000-0000-0000-0000-000000000002', 'Crown of Conviction', 'A gilded crown radiating absolute certainty.', 'Crown', 'To wear it is to become the market.', 'equipment', 'narrative', 'mythic', '{"courage":6,"justice":2}', 15, '{"name":"Deal Maker","description":"15% chance to flip quest outcome in your favor.","mechanic":"flip_outcome","mechanicValue":0.15}'),
+('b0000000-0000-0000-0000-000000000003', 'Neural Chip', 'A crystalline chip whispering probability distributions.', 'Cpu', 'Probability is just information you haven''t processed yet.', 'equipment', 'algorithm', 'mythic', '{"wisdom":5,"skill":3}', 10, '{"name":"AI Oracle","description":"Reveal one hidden quest effect before betting.","mechanic":"reveal_effect","mechanicValue":1.0}'),
+('b0000000-0000-0000-0000-000000000004', 'Golden Microphone', 'A diamond-studded mic. Every word spoken moves markets.', 'Mic', 'One word. One billion in volume.', 'weapon', 'resonance', 'mythic', '{"skill":4,"temperance":2}', 8, '{"name":"Pop Sovereign","description":"+15% payout on CULTURE quests.","mechanic":"bonus_payout_category","mechanicValue":1.15,"mechanicTarget":"CULTURE"}'),
+('b0000000-0000-0000-0000-000000000005', 'Phantom Mask', 'A featureless white mask. Identity unknown, influence undeniable.', 'EyeOff', 'A trillion dollars, a million guesses.', 'equipment', 'data', 'mythic', '{"wisdom":4,"skill":4}', 10, '{"name":"Anon Effect","description":"Random 1.0x-3.0x bonus on CRYPTO quests.","mechanic":"random_multiplier","mechanicValue":2.0,"mechanicTarget":"CRYPTO"}'),
+-- RARE
+('b0000000-0000-0000-0000-000000000006', 'Rebel Badge', 'A hand-painted badge worn by those who strike for the future.', 'Shield', 'Disruption is a form of care.', 'equipment', 'anomaly', 'rare', '{"justice":4,"courage":1}', 4, '{"name":"Climate Strike","description":"+25% payout on quests linked to high-Wisdom heroes.","mechanic":"bonus_payout_stat","mechanicValue":1.25,"mechanicTarget":"wisdom"}'),
+('b0000000-0000-0000-0000-000000000007', 'Iron Gauntlet', 'A cold metal gauntlet. Crushes opposition with sheer political leverage.', 'Swords', 'Power doesn''t negotiate.', 'equipment', 'conduit', 'rare', '{"courage":4,"prudence":1}', 5, '{"name":"Strong Arm","description":"+15% payout on POLITICS quests.","mechanic":"bonus_payout_category","mechanicValue":1.15,"mechanicTarget":"POLITICS"}'),
+('b0000000-0000-0000-0000-000000000008', 'Oracle Ledger', 'An ancient leather-bound ledger. Time is always on its side.', 'Book', 'In the short run the market is a voting machine...', 'equipment', 'capital', 'rare', '{"prudence":5,"temperance":2}', 3, '{"name":"Value Investor","description":"+30% if you hold prediction >48h.","mechanic":"bonus_hold_time","mechanicValue":1.30}'),
+('b0000000-0000-0000-0000-000000000009', 'Metaverse Visor', 'Sleek AR visor bridging realities. Doubles quest modifiers.', 'Glasses', 'One reality at a time was never enough.', 'equipment', 'cascade', 'rare', '{"wisdom":3,"skill":2}', 5, '{"name":"Metarchitect","description":"Double the effect of one random quest modifier.","mechanic":"double_modifier","mechanicValue":2.0}'),
+('b0000000-0000-0000-0000-000000000010', 'Harmony Pendant', 'A radiant pendant that hums when volume spikes.', 'Gem', 'When the crowd moves, it sings.', 'equipment', 'resonance', 'rare', '{"temperance":3,"justice":2}', 3, '{"name":"Queen Buzz","description":"+10% on quests with >100K volume.","mechanic":"bonus_high_volume","mechanicValue":1.10}'),
+('b0000000-0000-0000-0000-000000000011', 'Contrarian Compass', 'A compass that points opposite the crowd.', 'Compass', 'The herd is usually wrong. Usually.', 'equipment', 'anomaly', 'rare', '{"justice":4,"wisdom":1}', 4, '{"name":"Contrarian","description":"+30% against 70%+ consensus.","mechanic":"bonus_contrarian","mechanicValue":1.30}'),
+('b0000000-0000-0000-0000-000000000012', 'Whale Harpoon', 'A heavy harpoon calibrated for the biggest bets.', 'Anchor', 'Go big or go home. Preferably big.', 'weapon', 'capital', 'rare', '{"courage":4}', 5, '{"name":"Whale Hunter","description":"+25% on bets over 300 MP.","mechanic":"bonus_large_bet","mechanicValue":1.25}'),
+('b0000000-0000-0000-0000-000000000013', 'Diamond Fists', 'Ceremonial diamond-knuckled gloves. The ultimate HODL statement.', 'Gem', 'Diamond is forged under pressure.', 'equipment', 'capital', 'rare', '{"temperance":3,"courage":2}', 3, '{"name":"Diamond Hands","description":"+20% payout if held to resolution.","mechanic":"bonus_hold_resolution","mechanicValue":1.20}'),
+-- UNCOMMON
+('b0000000-0000-0000-0000-000000000014', 'Dawn Watch', 'A timepiece set to market open. Early entries rewarded.', 'Clock', 'The early oracle gets the edge.', 'equipment', 'network', 'uncommon', '{"skill":3}', 1, NULL),
+('b0000000-0000-0000-0000-000000000015', 'Scholar Scroll', 'An ancient scroll of market wisdom passed through generations.', 'Scroll', 'Those who do not study history...', 'equipment', 'data', 'uncommon', '{"wisdom":2,"prudence":1}', 2, NULL),
+('b0000000-0000-0000-0000-000000000016', 'Lucky Charm', 'A four-leaf clover pressed in resin. Probability bends around it.', 'Clover', 'Luck is just unrecognized pattern recognition.', 'equipment', 'data', 'uncommon', '{"skill":2}', 1, NULL);
+
+-- 3. HERO ITEMS — default equipment per hero (player_id IS NULL)
+INSERT INTO hero_items (hero_id, item_id, slot_type, player_id) VALUES
+('a0000000-0000-0000-0000-000000000001', 'b0000000-0000-0000-0000-000000000001', 'vision', NULL),
+('a0000000-0000-0000-0000-000000000001', 'b0000000-0000-0000-0000-000000000016', 'data', NULL),
+('a0000000-0000-0000-0000-000000000002', 'b0000000-0000-0000-0000-000000000002', 'narrative', NULL),
+('a0000000-0000-0000-0000-000000000002', 'b0000000-0000-0000-0000-000000000007', 'conduit', NULL),
+('a0000000-0000-0000-0000-000000000003', 'b0000000-0000-0000-0000-000000000006', 'anomaly', NULL),
+('a0000000-0000-0000-0000-000000000004', 'b0000000-0000-0000-0000-000000000003', 'algorithm', NULL),
+('a0000000-0000-0000-0000-000000000004', 'b0000000-0000-0000-0000-000000000015', 'data', NULL),
+('a0000000-0000-0000-0000-000000000005', 'b0000000-0000-0000-0000-000000000007', 'conduit', NULL),
+('a0000000-0000-0000-0000-000000000005', 'b0000000-0000-0000-0000-000000000013', 'capital', NULL),
+('a0000000-0000-0000-0000-000000000006', 'b0000000-0000-0000-0000-000000000004', 'resonance', NULL),
+('a0000000-0000-0000-0000-000000000006', 'b0000000-0000-0000-0000-000000000014', 'network', NULL),
+('a0000000-0000-0000-0000-000000000007', 'b0000000-0000-0000-0000-000000000008', 'capital', NULL),
+('a0000000-0000-0000-0000-000000000008', 'b0000000-0000-0000-0000-000000000005', 'data', NULL),
+('a0000000-0000-0000-0000-000000000009', 'b0000000-0000-0000-0000-000000000009', 'cascade', NULL),
+('a0000000-0000-0000-0000-000000000009', 'b0000000-0000-0000-0000-000000000003', 'algorithm', NULL),
+('a0000000-0000-0000-0000-000000000010', 'b0000000-0000-0000-0000-000000000004', 'resonance', NULL);
+
+-- 4. QUESTS
+INSERT INTO quests (quest_id, question, description, category, status, volume, engagement, closes_in, rarity_density) VALUES
+('c0000000-0000-0000-0000-000000000001', 'Will Bitcoin exceed $150,000 by December 31, 2026?', 'BTC hit ATH in 2024. With ETF inflows, halving effects, and institutional adoption — can it reach $150K?', 'CRYPTO', 'OPEN', 245000, 72, '2026-12-31T23:59:59Z', 40),
+('c0000000-0000-0000-0000-000000000002', 'Will Donald Trump serve a full term as 47th President?', 'Will the 47th President complete the full 4-year term without impeachment, resignation, or removal?', 'POLITICS', 'OPEN', 890000, 94, '2029-01-20T23:59:59Z', 55),
+('c0000000-0000-0000-0000-000000000003', 'Will OpenAI release GPT-6 by end of 2026?', 'GPT-5 shipped mid-2025. OpenAI is on an aggressive release cadence. Can they ship the next generation?', 'TECH', 'OPEN', 178000, 68, '2026-12-31T23:59:59Z', 45),
+('c0000000-0000-0000-0000-000000000004', 'Will the Kansas City Chiefs win Super Bowl LXI?', 'Mahomes chasing Brady''s ring count. Chiefs dynasty or new contender emerges?', 'SPORTS', 'OPEN', 420000, 85, '2027-02-14T23:59:59Z', 25),
+('c0000000-0000-0000-0000-000000000005', 'Will Taylor Swift release a new album in 2026?', 'Taylor has released 5 albums since 2020. Can she keep up the pace?', 'CULTURE', 'OPEN', 560000, 91, '2026-12-31T23:59:59Z', 60),
+('c0000000-0000-0000-0000-000000000006', 'Will the Fed cut interest rates below 3% by end of 2026?', 'After aggressive hiking, the Fed has been gradually cutting. Will they reach sub-3%?', 'CRYPTO', 'OPEN', 310000, 76, '2026-12-31T23:59:59Z', 35),
+('c0000000-0000-0000-0000-000000000007', 'Will Tesla stock reach $500 per share by end of 2026?', 'Tesla has been volatile. Robotaxis, Optimus bots, Cybertruck ramp.', 'TECH', 'OPEN', 195000, 63, '2026-12-31T23:59:59Z', 50),
+('c0000000-0000-0000-0000-000000000008', 'Will Russia and Ukraine sign a ceasefire agreement in 2026?', 'The war continues into its 4th year. International pressure mounts.', 'POLITICS', 'OPEN', 670000, 88, '2026-12-31T23:59:59Z', 35),
+('c0000000-0000-0000-0000-000000000009', 'Will Beyonce win Album of the Year at the 2027 Grammys?', 'Beyonce finally won AOTY in 2025. Can she go back-to-back?', 'CULTURE', 'OPEN', 89000, 55, '2027-02-01T23:59:59Z', 15),
+('c0000000-0000-0000-0000-000000000010', 'Will SpaceX successfully land humans on the Moon by end of 2026?', 'Artemis III is scheduled. SpaceX Starship is the lander. Can they stick the schedule?', 'TECH', 'OPEN', 520000, 82, '2026-12-31T23:59:59Z', 30),
+('c0000000-0000-0000-0000-000000000011', 'Will China and Taiwan reach a unification agreement by 2030?', 'Cross-strait tensions continue to escalate. Beijing has increased military pressure.', 'WORLD', 'OPEN', 720000, 87, '2030-01-01T23:59:59Z', 48),
+('c0000000-0000-0000-0000-000000000012', 'Will the UN Security Council be reformed by end of 2027?', 'Calls for Security Council expansion intensify as Brazil, India, Japan, and Germany push for permanent seats.', 'WORLD', 'OPEN', 98000, 45, '2027-12-31T23:59:59Z', 22),
+('c0000000-0000-0000-0000-000000000013', 'Will the S&P 500 close above 7,000 by end of 2026?', 'The S&P has rallied on AI optimism and rate cut hopes. Can it break through 7,000 by year end?', 'FINANCE', 'OPEN', 480000, 79, '2026-12-31T23:59:59Z', 42),
+('c0000000-0000-0000-0000-000000000014', 'Will US national debt exceed $40 trillion in 2026?', 'US debt surpassed $35T in 2024. With rising interest payments and deficit spending, how fast does it climb?', 'FINANCE', 'OPEN', 185000, 66, '2026-12-31T23:59:59Z', 38),
+('c0000000-0000-0000-0000-000000000015', 'Will a private company achieve orbital human spaceflight in 2026?', 'Beyond SpaceX and Blue Origin — will a third private company put humans in orbit?', 'SCIENCE', 'OPEN', 76000, 52, '2026-12-31T23:59:59Z', 18),
+('c0000000-0000-0000-0000-000000000016', 'Will CRISPR gene therapy receive FDA approval for a major disease by end of 2026?', 'CRISPR therapies are advancing rapidly. Sickle cell already approved — could cancer or heart disease be next?', 'SCIENCE', 'OPEN', 132000, 58, '2026-12-31T23:59:59Z', 32),
+('c0000000-0000-0000-0000-000000000017', 'Will any AI model pass the ARC-AGI benchmark by end of 2026?', 'The ARC-AGI benchmark tests abstract reasoning. No AI has cracked it yet. Will 2026 be the year?', 'AI', 'OPEN', 290000, 81, '2026-12-31T23:59:59Z', 52),
+('c0000000-0000-0000-0000-000000000018', 'Will the EU impose a $1B+ fine on a major AI company in 2026?', 'EU AI Act enforcement begins. Will regulators hit a tech giant with a billion-dollar penalty?', 'AI', 'OPEN', 215000, 70, '2026-12-31T23:59:59Z', 44),
+('c0000000-0000-0000-0000-000000000019', 'Will GTA VI sell 50 million copies in its first quarter?', 'Rockstar''s GTA VI is the most anticipated game in history. Can it hit 50M units in Q1 after release?', 'GAMING', 'OPEN', 350000, 83, '2027-03-31T23:59:59Z', 55),
+('c0000000-0000-0000-0000-000000000020', 'Will Nintendo Switch 2 launch before March 2027?', 'The Switch 2 has been teased for years. Nintendo confirmed it''s coming — but when exactly?', 'GAMING', 'OPEN', 280000, 75, '2027-02-28T23:59:59Z', 20),
+('c0000000-0000-0000-0000-000000000021', 'Will ''Avatar 4'' gross over $2 billion worldwide?', 'James Cameron''s Avatar franchise has broken box office records twice. Can the 4th installment do it again?', 'ENTERTAINMENT', 'OPEN', 165000, 64, '2029-12-31T23:59:59Z', 28),
+('c0000000-0000-0000-0000-000000000022', 'Will Kendrick Lamar win a Grammy for Album of the Year in 2027?', 'Following the Drake beef and cultural dominance, can Kendrick secure the top Grammy prize?', 'ENTERTAINMENT', 'OPEN', 142000, 71, '2027-02-01T23:59:59Z', 36);
+
+-- 5. QUEST-HERO LINKS
+INSERT INTO quest_heroes (quest_id, hero_id) VALUES
+('c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000001'), ('c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000008'),
+('c0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000002'), ('c0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000005'),
+('c0000000-0000-0000-0000-000000000003', 'a0000000-0000-0000-0000-000000000004'), ('c0000000-0000-0000-0000-000000000003', 'a0000000-0000-0000-0000-000000000009'),
+('c0000000-0000-0000-0000-000000000004', 'a0000000-0000-0000-0000-000000000006'),
+('c0000000-0000-0000-0000-000000000005', 'a0000000-0000-0000-0000-000000000006'), ('c0000000-0000-0000-0000-000000000005', 'a0000000-0000-0000-0000-000000000010'),
+('c0000000-0000-0000-0000-000000000006', 'a0000000-0000-0000-0000-000000000007'), ('c0000000-0000-0000-0000-000000000006', 'a0000000-0000-0000-0000-000000000004'),
+('c0000000-0000-0000-0000-000000000007', 'a0000000-0000-0000-0000-000000000001'),
+('c0000000-0000-0000-0000-000000000008', 'a0000000-0000-0000-0000-000000000005'), ('c0000000-0000-0000-0000-000000000008', 'a0000000-0000-0000-0000-000000000002'),
+('c0000000-0000-0000-0000-000000000009', 'a0000000-0000-0000-0000-000000000010'), ('c0000000-0000-0000-0000-000000000009', 'a0000000-0000-0000-0000-000000000006'),
+('c0000000-0000-0000-0000-000000000010', 'a0000000-0000-0000-0000-000000000001'),
+('c0000000-0000-0000-0000-000000000011', 'a0000000-0000-0000-0000-000000000005'), ('c0000000-0000-0000-0000-000000000011', 'a0000000-0000-0000-0000-000000000002'),
+('c0000000-0000-0000-0000-000000000012', 'a0000000-0000-0000-0000-000000000003'), ('c0000000-0000-0000-0000-000000000012', 'a0000000-0000-0000-0000-000000000007'),
+('c0000000-0000-0000-0000-000000000013', 'a0000000-0000-0000-0000-000000000007'), ('c0000000-0000-0000-0000-000000000013', 'a0000000-0000-0000-0000-000000000004'),
+('c0000000-0000-0000-0000-000000000014', 'a0000000-0000-0000-0000-000000000007'), ('c0000000-0000-0000-0000-000000000014', 'a0000000-0000-0000-0000-000000000002'),
+('c0000000-0000-0000-0000-000000000015', 'a0000000-0000-0000-0000-000000000001'), ('c0000000-0000-0000-0000-000000000015', 'a0000000-0000-0000-0000-000000000004'),
+('c0000000-0000-0000-0000-000000000016', 'a0000000-0000-0000-0000-000000000003'), ('c0000000-0000-0000-0000-000000000016', 'a0000000-0000-0000-0000-000000000008'),
+('c0000000-0000-0000-0000-000000000017', 'a0000000-0000-0000-0000-000000000004'), ('c0000000-0000-0000-0000-000000000017', 'a0000000-0000-0000-0000-000000000009'),
+('c0000000-0000-0000-0000-000000000018', 'a0000000-0000-0000-0000-000000000003'), ('c0000000-0000-0000-0000-000000000018', 'a0000000-0000-0000-0000-000000000004'),
+('c0000000-0000-0000-0000-000000000019', 'a0000000-0000-0000-0000-000000000006'), ('c0000000-0000-0000-0000-000000000019', 'a0000000-0000-0000-0000-000000000009'),
+('c0000000-0000-0000-0000-000000000020', 'a0000000-0000-0000-0000-000000000009'),
+('c0000000-0000-0000-0000-000000000021', 'a0000000-0000-0000-0000-000000000010'), ('c0000000-0000-0000-0000-000000000021', 'a0000000-0000-0000-0000-000000000006'),
+('c0000000-0000-0000-0000-000000000022', 'a0000000-0000-0000-0000-000000000010'), ('c0000000-0000-0000-0000-000000000022', 'a0000000-0000-0000-0000-000000000006');
+
+-- 6. QUEST MARKETS
+INSERT INTO quest_markets (quest_id, yes_probability, no_probability, yes_volume, no_volume) VALUES
+('c0000000-0000-0000-0000-000000000001', 42, 58, 102900, 142100),
+('c0000000-0000-0000-0000-000000000002', 68, 32, 605200, 284800),
+('c0000000-0000-0000-0000-000000000003', 35, 65, 62300, 115700),
+('c0000000-0000-0000-0000-000000000004', 22, 78, 92400, 327600),
+('c0000000-0000-0000-0000-000000000005', 72, 28, 403200, 156800),
+('c0000000-0000-0000-0000-000000000006', 48, 52, 148800, 161200),
+('c0000000-0000-0000-0000-000000000007', 28, 72, 54600, 140400),
+('c0000000-0000-0000-0000-000000000008', 38, 62, 254600, 415400),
+('c0000000-0000-0000-0000-000000000009', 55, 45, 48950, 40050),
+('c0000000-0000-0000-0000-000000000010', 15, 85, 78000, 442000),
+('c0000000-0000-0000-0000-000000000011', 18, 82, 129600, 590400),
+('c0000000-0000-0000-0000-000000000012', 22, 78, 21560, 76440),
+('c0000000-0000-0000-0000-000000000013', 58, 42, 278400, 201600),
+('c0000000-0000-0000-0000-000000000014', 64, 36, 118400, 66600),
+('c0000000-0000-0000-0000-000000000015', 12, 88, 9120, 66880),
+('c0000000-0000-0000-0000-000000000016', 45, 55, 59400, 72600),
+('c0000000-0000-0000-0000-000000000017', 31, 69, 89900, 200100),
+('c0000000-0000-0000-0000-000000000018', 52, 48, 111800, 103200),
+('c0000000-0000-0000-0000-000000000019', 38, 62, 133000, 217000),
+('c0000000-0000-0000-0000-000000000020', 82, 18, 229600, 50400),
+('c0000000-0000-0000-0000-000000000021', 41, 59, 67650, 97350),
+('c0000000-0000-0000-0000-000000000022', 66, 34, 93720, 48280);
+
+-- 7. LOOT TABLE (from prototype quest.lootTable)
+INSERT INTO loot_table_entries (quest_id, item_id, item_name, item_rarity, chance) VALUES
+('c0000000-0000-0000-0000-000000000001', 'b0000000-0000-0000-0000-000000000016', 'Lucky Charm', 'uncommon', 0.35),
+('c0000000-0000-0000-0000-000000000001', 'b0000000-0000-0000-0000-000000000015', 'Scholar Scroll', 'uncommon', 0.15),
+('c0000000-0000-0000-0000-000000000002', 'b0000000-0000-0000-0000-000000000007', 'Iron Gauntlet', 'rare', 0.10),
+('c0000000-0000-0000-0000-000000000002', 'b0000000-0000-0000-0000-000000000013', 'Diamond Fists', 'rare', 0.25),
+('c0000000-0000-0000-0000-000000000003', 'b0000000-0000-0000-0000-000000000003', 'Neural Chip', 'mythic', 0.08),
+('c0000000-0000-0000-0000-000000000003', 'b0000000-0000-0000-0000-000000000015', 'Scholar Scroll', 'uncommon', 0.30),
+('c0000000-0000-0000-0000-000000000004', 'b0000000-0000-0000-0000-000000000014', 'Dawn Watch', 'uncommon', 0.20),
+('c0000000-0000-0000-0000-000000000004', 'b0000000-0000-0000-0000-000000000016', 'Lucky Charm', 'uncommon', 0.15),
+('c0000000-0000-0000-0000-000000000005', 'b0000000-0000-0000-0000-000000000010', 'Harmony Pendant', 'rare', 0.12),
+('c0000000-0000-0000-0000-000000000005', 'b0000000-0000-0000-0000-000000000004', 'Golden Microphone', 'mythic', 0.06),
+('c0000000-0000-0000-0000-000000000006', 'b0000000-0000-0000-0000-000000000008', 'Oracle Ledger', 'rare', 0.10),
+('c0000000-0000-0000-0000-000000000006', 'b0000000-0000-0000-0000-000000000011', 'Contrarian Compass', 'rare', 0.20),
+('c0000000-0000-0000-0000-000000000007', 'b0000000-0000-0000-0000-000000000001', 'Tech Visor', 'mythic', 0.05),
+('c0000000-0000-0000-0000-000000000007', 'b0000000-0000-0000-0000-000000000012', 'Whale Harpoon', 'rare', 0.18),
+('c0000000-0000-0000-0000-000000000008', 'b0000000-0000-0000-0000-000000000002', 'Crown of Conviction', 'mythic', 0.08),
+('c0000000-0000-0000-0000-000000000008', 'b0000000-0000-0000-0000-000000000011', 'Contrarian Compass', 'rare', 0.22),
+('c0000000-0000-0000-0000-000000000009', 'b0000000-0000-0000-0000-000000000004', 'Golden Microphone', 'mythic', 0.07),
+('c0000000-0000-0000-0000-000000000009', 'b0000000-0000-0000-0000-000000000010', 'Harmony Pendant', 'rare', 0.14),
+('c0000000-0000-0000-0000-000000000010', 'b0000000-0000-0000-0000-000000000001', 'Tech Visor', 'mythic', 0.06),
+('c0000000-0000-0000-0000-000000000010', 'b0000000-0000-0000-0000-000000000012', 'Whale Harpoon', 'rare', 0.16),
+('c0000000-0000-0000-0000-000000000011', 'b0000000-0000-0000-0000-000000000002', 'Crown of Conviction', 'mythic', 0.10),
+('c0000000-0000-0000-0000-000000000011', 'b0000000-0000-0000-0000-000000000011', 'Contrarian Compass', 'rare', 0.18),
+('c0000000-0000-0000-0000-000000000012', 'b0000000-0000-0000-0000-000000000015', 'Scholar Scroll', 'uncommon', 0.30),
+('c0000000-0000-0000-0000-000000000012', 'b0000000-0000-0000-0000-000000000011', 'Contrarian Compass', 'rare', 0.12),
+('c0000000-0000-0000-0000-000000000013', 'b0000000-0000-0000-0000-000000000008', 'Oracle Ledger', 'rare', 0.12),
+('c0000000-0000-0000-0000-000000000013', 'b0000000-0000-0000-0000-000000000013', 'Diamond Fists', 'rare', 0.20),
+('c0000000-0000-0000-0000-000000000014', 'b0000000-0000-0000-0000-000000000008', 'Oracle Ledger', 'rare', 0.15),
+('c0000000-0000-0000-0000-000000000014', 'b0000000-0000-0000-0000-000000000015', 'Scholar Scroll', 'uncommon', 0.25),
+('c0000000-0000-0000-0000-000000000015', 'b0000000-0000-0000-0000-000000000001', 'Tech Visor', 'mythic', 0.08),
+('c0000000-0000-0000-0000-000000000015', 'b0000000-0000-0000-0000-000000000014', 'Dawn Watch', 'uncommon', 0.22),
+('c0000000-0000-0000-0000-000000000016', 'b0000000-0000-0000-0000-000000000003', 'Neural Chip', 'mythic', 0.06),
+('c0000000-0000-0000-0000-000000000016', 'b0000000-0000-0000-0000-000000000015', 'Scholar Scroll', 'uncommon', 0.28),
+('c0000000-0000-0000-0000-000000000017', 'b0000000-0000-0000-0000-000000000003', 'Neural Chip', 'mythic', 0.10),
+('c0000000-0000-0000-0000-000000000017', 'b0000000-0000-0000-0000-000000000001', 'Tech Visor', 'mythic', 0.08),
+('c0000000-0000-0000-0000-000000000018', 'b0000000-0000-0000-0000-000000000007', 'Iron Gauntlet', 'rare', 0.09),
+('c0000000-0000-0000-0000-000000000018', 'b0000000-0000-0000-0000-000000000011', 'Contrarian Compass', 'rare', 0.16),
+('c0000000-0000-0000-0000-000000000019', 'b0000000-0000-0000-0000-000000000004', 'Golden Microphone', 'mythic', 0.07),
+('c0000000-0000-0000-0000-000000000019', 'b0000000-0000-0000-0000-000000000010', 'Harmony Pendant', 'rare', 0.14),
+('c0000000-0000-0000-0000-000000000020', 'b0000000-0000-0000-0000-000000000014', 'Dawn Watch', 'uncommon', 0.18),
+('c0000000-0000-0000-0000-000000000020', 'b0000000-0000-0000-0000-000000000016', 'Lucky Charm', 'uncommon', 0.12),
+('c0000000-0000-0000-0000-000000000021', 'b0000000-0000-0000-0000-000000000004', 'Golden Microphone', 'mythic', 0.08),
+('c0000000-0000-0000-0000-000000000021', 'b0000000-0000-0000-0000-000000000010', 'Harmony Pendant', 'rare', 0.15),
+('c0000000-0000-0000-0000-000000000022', 'b0000000-0000-0000-0000-000000000010', 'Harmony Pendant', 'rare', 0.11),
+('c0000000-0000-0000-0000-000000000022', 'b0000000-0000-0000-0000-000000000016', 'Lucky Charm', 'uncommon', 0.19);
+
+-- 8. DUMMY PLAYER for seed wagers/comments (requires auth.users entry)
+INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
+VALUES ('00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'seeder@meycult.io', '$2a$10$dummyhash0000000000000000000000000000000000000000000000000', NOW(), NOW(), NOW(), '{"provider":"email"}', '{}')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO players (id, handle, alias, onboarding_complete)
+VALUES ('00000000-0000-0000-0000-000000000000', 'seeder', 'System Seeder', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- 9. SEED WAGERS — 4 per quest
+INSERT INTO quest_wagers (quest_id, player_id, outcome, amount, entry_probability, result) VALUES
+('c0000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000000', 'YES', 500, 42, 'PENDING'),
+('c0000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000000', 'NO', 300, 58, 'PENDING'),
+('c0000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000000', 'YES', 800, 40, 'PENDING'),
+('c0000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000000', 'YES', 1200, 68, 'PENDING'),
+('c0000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000000', 'NO', 400, 32, 'PENDING'),
+('c0000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000000', 'YES', 900, 65, 'PENDING'),
+('c0000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000000', 'NO', 600, 65, 'PENDING'),
+('c0000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000000', 'YES', 200, 35, 'PENDING'),
+('c0000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000000', 'NO', 550, 78, 'PENDING'),
+('c0000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000000', 'YES', 350, 22, 'PENDING'),
+('c0000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000000', 'YES', 1000, 72, 'PENDING'),
+('c0000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000000', 'NO', 150, 28, 'PENDING'),
+('c0000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000000', 'YES', 700, 70, 'PENDING'),
+('c0000000-0000-0000-0000-000000000006', '00000000-0000-0000-0000-000000000000', 'YES', 450, 48, 'PENDING'),
+('c0000000-0000-0000-0000-000000000007', '00000000-0000-0000-0000-000000000000', 'NO', 650, 72, 'PENDING'),
+('c0000000-0000-0000-0000-000000000007', '00000000-0000-0000-0000-000000000000', 'YES', 200, 28, 'PENDING'),
+('c0000000-0000-0000-0000-000000000008', '00000000-0000-0000-0000-000000000000', 'YES', 880, 38, 'PENDING'),
+('c0000000-0000-0000-0000-000000000008', '00000000-0000-0000-0000-000000000000', 'NO', 420, 62, 'PENDING'),
+('c0000000-0000-0000-0000-000000000009', '00000000-0000-0000-0000-000000000000', 'YES', 320, 55, 'PENDING'),
+('c0000000-0000-0000-0000-000000000010', '00000000-0000-0000-0000-000000000000', 'NO', 1100, 85, 'PENDING'),
+('c0000000-0000-0000-0000-000000000011', '00000000-0000-0000-0000-000000000000', 'NO', 900, 82, 'PENDING'),
+('c0000000-0000-0000-0000-000000000012', '00000000-0000-0000-0000-000000000000', 'YES', 180, 22, 'PENDING'),
+('c0000000-0000-0000-0000-000000000013', '00000000-0000-0000-0000-000000000000', 'YES', 750, 58, 'PENDING'),
+('c0000000-0000-0000-0000-000000000014', '00000000-0000-0000-0000-000000000000', 'YES', 600, 64, 'PENDING'),
+('c0000000-0000-0000-0000-000000000015', '00000000-0000-0000-0000-000000000000', 'NO', 400, 88, 'PENDING'),
+('c0000000-0000-0000-0000-000000000016', '00000000-0000-0000-0000-000000000000', 'YES', 350, 45, 'PENDING'),
+('c0000000-0000-0000-0000-000000000017', '00000000-0000-0000-0000-000000000000', 'NO', 500, 69, 'PENDING'),
+('c0000000-0000-0000-0000-000000000018', '00000000-0000-0000-0000-000000000000', 'YES', 480, 52, 'PENDING'),
+('c0000000-0000-0000-0000-000000000019', '00000000-0000-0000-0000-000000000000', 'YES', 620, 38, 'PENDING'),
+('c0000000-0000-0000-0000-000000000020', '00000000-0000-0000-0000-000000000000', 'YES', 280, 82, 'PENDING'),
+('c0000000-0000-0000-0000-000000000021', '00000000-0000-0000-0000-000000000000', 'NO', 380, 59, 'PENDING'),
+('c0000000-0000-0000-0000-000000000022', '00000000-0000-0000-0000-000000000000', 'YES', 540, 66, 'PENDING');
+
+-- 10. SEED ACTIVITIES
+INSERT INTO quest_activities (quest_id, type, text, player_id, amount) VALUES
+('c0000000-0000-0000-0000-000000000001', 'wager', 'OraKing wagered 500 MP on YES at 42% odds.', '00000000-0000-0000-0000-000000000000', 500),
+('c0000000-0000-0000-0000-000000000001', 'price_move', 'YES surged from 38% → 42% in the last hour.', NULL, NULL),
+('c0000000-0000-0000-0000-000000000001', 'effect_trigger', 'Tech Visor activated — +20% bonus applied.', NULL, NULL),
+('c0000000-0000-0000-0000-000000000002', 'wager', 'FateMaster wagered 1200 MP on YES at 68% odds.', '00000000-0000-0000-0000-000000000000', 1200),
+('c0000000-0000-0000-0000-000000000002', 'price_move', 'NO jumped 5 points after breaking news.', NULL, NULL),
+('c0000000-0000-0000-0000-000000000003', 'wager', 'ShadowMind wagered 600 MP on NO.', '00000000-0000-0000-0000-000000000000', 600),
+('c0000000-0000-0000-0000-000000000003', 'hero_action', 'Sam Altman''s Neural Chip triggered — reveal effect active.', NULL, NULL),
+('c0000000-0000-0000-0000-000000000004', 'wager', 'NovaSage wagered 350 MP on YES at 22%.', '00000000-0000-0000-0000-000000000000', 350),
+('c0000000-0000-0000-0000-000000000005', 'wager', 'VoidHawk wagered 1000 MP on YES at 72% odds.', '00000000-0000-0000-0000-000000000000', 1000),
+('c0000000-0000-0000-0000-000000000005', 'price_move', 'Volume spike — both sides moving rapidly.', NULL, NULL),
+('c0000000-0000-0000-0000-000000000005', 'resolution', 'Quest resolved YES — majority won.', NULL, NULL),
+('c0000000-0000-0000-0000-000000000006', 'wager', 'CypherFox wagered 450 MP on YES at 48%.', '00000000-0000-0000-0000-000000000000', 450),
+('c0000000-0000-0000-0000-000000000007', 'wager', 'IronOracle wagered 650 MP on NO.', '00000000-0000-0000-0000-000000000000', 650),
+('c0000000-0000-0000-0000-000000000008', 'wager', 'RuneKnight wagered 880 MP on YES at 38%.', '00000000-0000-0000-0000-000000000000', 880),
+('c0000000-0000-0000-0000-000000000008', 'hero_action', 'Crown of Conviction triggered — Deal Maker active.', NULL, NULL),
+('c0000000-0000-0000-0000-000000000010', 'wager', 'ChronSeer wagered 1100 MP on NO.', '00000000-0000-0000-0000-000000000000', 1100),
+('c0000000-0000-0000-0000-000000000013', 'wager', 'StarWeaver wagered 750 MP on YES at 58%.', '00000000-0000-0000-0000-000000000000', 750),
+('c0000000-0000-0000-0000-000000000013', 'price_move', 'S&P quest volume surging — engagement at 79.', NULL, NULL),
+('c0000000-0000-0000-0000-000000000017', 'wager', 'PhantomEdge wagered 500 MP on NO at 69%.', '00000000-0000-0000-0000-000000000000', 500),
+('c0000000-0000-0000-0000-000000000017', 'effect_trigger', 'High Stakes condition triggered — payouts amplified.', NULL, NULL),
+('c0000000-0000-0000-0000-000000000019', 'wager', 'GlyphLord wagered 620 MP on YES at 38%.', '00000000-0000-0000-0000-000000000000', 620),
+('c0000000-0000-0000-0000-000000000019', 'price_move', 'Gaming quest trending — odds shifting.', NULL, NULL),
+('c0000000-0000-0000-0000-000000000022', 'wager', 'AetherWolf wagered 540 MP on YES at 66%.', '00000000-0000-0000-0000-000000000000', 540),
+('c0000000-0000-0000-0000-000000000022', 'resolution', 'Quest resolved YES — wagerers won.', NULL, NULL);
+
+-- 11. SEED COMMENTS
+INSERT INTO quest_comments (quest_id, player_id, text, upvotes, downvotes) VALUES
+('c0000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000000', 'This quest is way underpriced on YES. The fundamentals are strong.', 12, 2),
+('c0000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000000', 'NO is the play here. Everyone is piling into YES blindly.', 8, 5),
+('c0000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000000', 'Interesting odds movement. Watching for the breakout.', 15, 1),
+('c0000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000000', 'Too volatile for me. Waiting for more data.', 3, 8),
+('c0000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000000', 'AI quests are my specialty. Easy pick here.', 20, 3),
+('c0000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000000', 'Swifties are going to push this to YES. Count on it.', 18, 2),
+('c0000000-0000-0000-0000-000000000008', '00000000-0000-0000-0000-000000000000', 'Geopolitical bets are always the hardest. Staying out.', 6, 4),
+('c0000000-0000-0000-0000-000000000010', '00000000-0000-0000-0000-000000000000', 'SpaceX never hits deadlines. Easy NO.', 14, 3),
+('c0000000-0000-0000-0000-000000000013', '00000000-0000-0000-0000-000000000000', 'Buffett''s Oracle Ledger makes this a value play.', 9, 1),
+('c0000000-0000-0000-0000-000000000017', '00000000-0000-0000-0000-000000000000', 'AGI benchmark? Not this year. Way too early.', 11, 2),
+('c0000000-0000-0000-0000-000000000020', '00000000-0000-0000-0000-000000000000', 'Nintendo always delays. NO is free money.', 22, 1),
+('c0000000-0000-0000-0000-000000000022', '00000000-0000-0000-0000-000000000000', 'Kendrick is unstoppable right now. YES all the way.', 16, 0);
